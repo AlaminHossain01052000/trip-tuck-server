@@ -24,9 +24,7 @@ run().catch(console.dir);
 app.get("/", (req, res) => {
     res.send("Server is running")
 })
-app.get("/offers", (req, res) => {
-    res.send("offer is running")
-})
+
 app.listen(port, () => {
     console.log("Listening to port", port)
 })
