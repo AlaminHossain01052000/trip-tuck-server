@@ -38,6 +38,22 @@ async function run() {
         const bookedOffers = await bookingCollection.find(query).toArray();
         res.json(bookedOffers)
     })
+    // get a particular booked offer using id
+    app.put("/bookings/:id", async (req, res) => {
+
+        const query = { _id: ObjectId(req.params.id) }
+        const options = { upsert: true };
+        const updateDoc = {
+            $set: {
+                status: req.body.status
+            },
+        };
+        const result = await bookingCollection.updateOne(query, updateDoc, options);
+        res.json(result);
+        // const query = { _id:ObjectId(req.params.id) };
+        // const findBookedOffer = await bookingCollection.findOne(query).toArray();
+        // res.json(findBookedOffer);
+    })
     // deleting a offer from my bookings
     app.delete("/bookings/:id", async (req, res) => {
         const query = { _id: ObjectId(req.params.id) };
