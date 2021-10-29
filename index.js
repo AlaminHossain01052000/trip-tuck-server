@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const { MongoClient } = require('mongodb');
 const cors = require("cors");
+const ObjectId = require("mongodb").ObjectId;
 require('dotenv').config();
 
 const port = process.env.PORT || 5000;
@@ -19,9 +20,37 @@ async function run() {
     await client.connect();
     const database = client.db("trip_tuck");
     const offerCollection = database.collection("offers");
+    const bookingCollection = database.collection("bookings");
+
+    // get all offers
     app.get("/offers", async (req, res) => {
         const offers = await offerCollection.find({}).toArray();
         res.json(offers);
+    })
+    // get booked offers
+    app.get("/bookings", async (req, res) => {
+        const bookings = await bookingCollection.find({}).toArray();
+        res.json(bookings);
+    })
+    // get all the booked offer of a particular user
+    app.get("/bookings/:email", async (req, res) => {
+        const query = { email: req.params.email }
+        const bookedOffers = await bookingCollection.find(query).toArray();
+        res.json(bookedOffers)
+    })
+    // deleting a offer from my bookings
+    app.delete("/bookings/:id", async (req, res) => {
+        const query = { _id: ObjectId(req.params.id) };
+        const deletedOffer = await bookingCollection.deleteOne(query);
+        res.json(deletedOffer);
+
+    })
+    // book a offer using crud post
+
+    app.post("/bookings", async (req, res) => {
+        console.log(req.body);
+        const cursor = await bookingCollection.insertOne(req.body);
+        res.json(cursor);
     })
 }
 run().catch(console.dir);
