@@ -27,6 +27,12 @@ async function run() {
         const offers = await offerCollection.find({}).toArray();
         res.json(offers);
     })
+
+    // add a new offer
+    app.post("/offers", async (req, res) => {
+        const newOffer = await offerCollection.insertOne(req.body);
+        res.json(newOffer)
+    })
     // get booked offers
     app.get("/bookings", async (req, res) => {
         const bookings = await bookingCollection.find({}).toArray();
@@ -50,9 +56,7 @@ async function run() {
         };
         const result = await bookingCollection.updateOne(query, updateDoc, options);
         res.json(result);
-        // const query = { _id:ObjectId(req.params.id) };
-        // const findBookedOffer = await bookingCollection.findOne(query).toArray();
-        // res.json(findBookedOffer);
+
     })
     // deleting a offer from my bookings
     app.delete("/bookings/:id", async (req, res) => {
