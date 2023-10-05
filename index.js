@@ -27,7 +27,6 @@ async function run() {
     const database = client.db("trip_tuck");
     const offerCollection = database.collection("offers");
     const bookingCollection = database.collection("bookings");
-    // console.log(database)
     // get all offers
     app.get("/offers", async (req, res) => {
         const offers = await offerCollection.find({}).toArray();
