@@ -17,7 +17,7 @@ const uri = `mongodb+srv://trip-tuck:7sNdJlGKJnISbITs@cluster0.li11u.mongodb.net
 const client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    connectTimeoutMS: 30000, // Adjust the timeout values as needed
+    connectTimeoutMS: 60000, // Adjust the timeout values as needed
     socketTimeoutMS: 30000,
   });
   
