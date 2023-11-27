@@ -18,7 +18,7 @@ const client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     connectTimeoutMS: 60000, // Adjust the timeout values as needed
-    socketTimeoutMS: 30000,
+    socketTimeoutMS: 60000,
   });
   
 
